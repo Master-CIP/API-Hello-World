@@ -1,1 +1,16 @@
+{
+  "name": "api-hello-world",
+  "version": "1.0.0",
+  "description": "API Hello World pour démonstration DevSecOps",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "author": "Yasser Allaoui/Jalil Khattar",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
 

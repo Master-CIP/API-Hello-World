@@ -8,7 +8,7 @@
     "lint": "echo \"Aucun linter défini\" && exit 0",
     "test": "echo \"Pas de tests définis pour le moment\" && exit 0"
   },
-  "author": "Yasser Allaoui",
+  "author": "Yasser Allaoui / Jalil Khattar ",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2"

@@ -1,16 +1,16 @@
 {
-  "name": "api-hello-world",
+  "name": "hello-world-api",
   "version": "1.0.0",
-  "description": "API Hello World pour démonstration DevSecOps",
+  "description": "API REST Hello World pour démonstration CI/CD sécurisée",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"No tests yet\" && exit 0"
+    "lint": "echo \"Aucun linter défini\" && exit 0",
+    "test": "echo \"Pas de tests définis pour le moment\" && exit 0"
   },
-  "author": "Yasser Allaoui/Jalil Khattar",
+  "author": "Yasser Allaoui",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2"
   }
 }
-

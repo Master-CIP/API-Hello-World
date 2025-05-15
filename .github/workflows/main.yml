@@ -78,33 +78,35 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:${{ github.sha }}
 
-  deploy:
-    needs: package
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install Ansible
-        run: pip install ansible
-
-      - name: Configure SSH access
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-
-      - name: Create Vault password file
-        run: echo "${{ secrets.VAULT_PASSWORD }}" > .vault_pass
-
-      - name: Run Ansible Playbook
-        run: |
-          ansible-playbook -i ansible/inventory/hosts ansible/deploy.yml \
-            --vault-password-file .vault_pass \
-            -e "docker_image=${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:${{ github.sha }}"
+    deploy:
+      needs: package
+      runs-on: ubuntu-latest
+      if: github.ref == 'refs/heads/main'
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+  
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.10'
+  
+        - name: Install Ansible
+          run: pip install ansible
+  
+        - name: Configure SSH access
+          run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+  
+        - name: Create Vault password file
+          run: echo "${{ secrets.VAULT_PASSWORD }}" > .vault_pass
+  
+        - name: Run Ansible Playbook remotely
+          run: |
+            ansible-playbook -i ansible/inventory/hosts ansible/deploy.yml \
+              --vault-password-file .vault_pass \
+              -e "docker_tag=${{ github.sha }}"

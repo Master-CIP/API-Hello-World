@@ -1,5 +1,5 @@
 [production]
-app-server ansible_host=13.60.193.20 ansible_user=deployer
+app-server ansible_host=13.60.193.20 ansible_user=ubuntu
 
 [production:vars]
 ansible_python_interpreter=/usr/bin/python3

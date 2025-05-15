@@ -11,9 +11,5 @@
     createhome: yes
     state: present
 
-- name: Ajouter la clé SSH autorisée
-  authorized_key:
-    user: deployer
-    state: present
-    key: "{{ deployer_ssh_key }}"
+
 

@@ -1,1 +1,19 @@
+- name: Créer le groupe deployer
+  group:
+    name: deployer
+    state: present
+
+- name: Créer l'utilisateur deployer
+  user:
+    name: deployer
+    group: deployer
+    shell: /bin/bash
+    createhome: yes
+    state: present
+
+- name: Ajouter la clé SSH autorisée
+  authorized_key:
+    user: deployer
+    state: present
+    key: "{{ deployer_ssh_key }}"
 

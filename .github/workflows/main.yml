@@ -78,7 +78,8 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:${{ github.sha }}
-deploy:
+          
+    deploy:
     needs: package
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'

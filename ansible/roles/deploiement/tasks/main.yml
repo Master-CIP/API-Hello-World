@@ -1,1 +1,21 @@
+- name: Login to Docker Hub
+  docker_login:
+    username: "{{ docker_registry_username }}"
+    password: "{{ docker_registry_password }}"
+
+- name: Supprimer conteneur existant
+  docker_container:
+    name: "{{ app_container_name }}"
+    state: absent
+  ignore_errors: true
+
+- name: Lancer le conteneur
+  docker_container:
+    name: "{{ app_container_name }}"
+    image: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
+    restart_policy: "{{ app_restart_policy }}"
+    published_ports:
+      - "{{ app_host_port }}:{{ app_port }}"
+    env: "{{ app_environment }}"
+    state: started
 

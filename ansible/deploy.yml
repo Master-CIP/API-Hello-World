@@ -11,3 +11,22 @@
     - docker
     - deploiement
 
+  tasks:
+
+    # 🔄 Forcer docker pull manuellement (sécurité)
+    - name: Récupérer l’image Docker la plus récente
+      docker_image:
+        name: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
+        source: pull
+        force_source: yes
+        state: present
+
+    - name: Redémarrer le conteneur avec la nouvelle image
+      docker_container:
+        name: "{{ app_container_name }}"
+        image: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
+        restart_policy: "{{ app_restart_policy }}"
+        published_ports:
+          - "{{ app_host_port }}:{{ app_port }}"
+        env: "{{ app_environment }}"
+        state: started

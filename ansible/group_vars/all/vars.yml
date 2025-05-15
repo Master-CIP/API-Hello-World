@@ -1,1 +1,8 @@
+docker_users:
+  - deployer
+
+app_container_name: hello-world-api
+app_port: 3000
+app_host_port: 3000
+app_restart_policy: always
 

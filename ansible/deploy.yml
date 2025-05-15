@@ -1,1 +1,13 @@
+---
+- name: Déployer l'application Hello World API
+  hosts: production
+  become: true
+  vars_files:
+    - group_vars/all/vars.yml
+    - group_vars/all/vault.yml
+
+  roles:
+    - utilisateur
+    - docker
+    - deploiement
 

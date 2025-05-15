@@ -1,1 +1,5 @@
+docker_registry_username: yasserscr
+docker_registry_password: TON_TOKEN
+app_environment:
+  NODE_ENV: production
 

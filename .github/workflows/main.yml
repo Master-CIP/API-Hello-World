@@ -8,12 +8,11 @@ on:
 
 env:
   NODE_VERSION: '16.x'
-  
+
 permissions:
   actions: read
   contents: read
   security-events: write
-
 
 jobs:
   build:
@@ -78,8 +77,8 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:${{ github.sha }}
-          
-    deploy:
+
+  deploy:
     needs: package
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'

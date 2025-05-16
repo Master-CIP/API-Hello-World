@@ -11,5 +11,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`API Hello World en écoute sur http://localhost:${port}`);
+  console.log(`API Hello World en écoute sur http://0.0.0.0:${port}`);
 });

@@ -1,4 +1,5 @@
 ---
+# Premier play : exécution des rôles
 - name: Déployer l'application Hello World API
   hosts: production
   become: true
@@ -11,22 +12,28 @@
     - docker
     - deploiement
 
+# Deuxième play : pull + redémarrage du conteneur
+- name: Lancer l'application avec la dernière image
+  hosts: production
+  become: true
+  vars_files:
+    - group_vars/all/vars.yml
+    - group_vars/all/vault.yml
+
   tasks:
+    - name: Récupérer l’image Docker la plus récente
+      docker_image:
+        name: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
+        source: pull
+        force_source: yes
+        state: present
 
-    # 🔄 Forcer docker pull manuellement (sécurité)
-- name: Récupérer l’image Docker la plus récente
-  docker_image:
-    name: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
-    source: pull
-    force_source: yes
-    state: present
-
-- name: Redémarrer le conteneur avec la nouvelle image
-  docker_container:
-    name: "{{ app_container_name }}"
-    image: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
-    restart_policy: "{{ app_restart_policy }}"
-    published_ports:
-      - "{{ app_host_port }}:{{ app_port }}"
-    env: "{{ app_environment }}"
-    state: started
+    - name: Redémarrer le conteneur avec la nouvelle image
+      docker_container:
+        name: "{{ app_container_name }}"
+        image: "{{ docker_registry_username }}/hello-world-api:{{ docker_tag | default('latest') }}"
+        restart_policy: "{{ app_restart_policy }}"
+        published_ports:
+          - "{{ app_host_port }}:{{ app_port }}"
+        env: "{{ app_environment }}"
+        state: started

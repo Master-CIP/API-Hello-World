@@ -88,8 +88,9 @@ jobs:
           context: .
           push: true
           tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:latest
-          ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:${{ github.sha }}
+                    ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:latest
+                    ${{ secrets.DOCKERHUB_USERNAME }}/hello-world-api:${{ github.sha }}
+
           
                 
 
